@@ -23,17 +23,17 @@ module ULID
     ms = now.to_unix_ms
 
     String.build do |io|
-      len.times do |i|
+      len.times do
         mod = ms % ENCODING_LEN
         io << ENCODING[mod]
-        ms = (ms - mod) / ENCODING_LEN
+        ms = (ms - mod) // ENCODING_LEN
       end
     end.reverse
   end
 
   private def encode_random(len : Int32) : String
     String.build do |io|
-      len.times do |i|
+      len.times do
         rand = Random.rand(ENCODING_LEN)
         io << ENCODING[rand]
       end
