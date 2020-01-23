@@ -15,7 +15,7 @@ module ULID
   # ULID.generate
   # # => "01B3EAF48P97R8MP9WS6MHDTZ3"
   # ```
-  def generate(seed_time : Time = Time.now) : String
+  def generate(seed_time : Time = Time.utc) : String
     encode_time(seed_time, TIME_LEN) + encode_random(RANDOM_LEN)
   end
 
