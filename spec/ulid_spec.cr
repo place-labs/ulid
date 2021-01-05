@@ -56,5 +56,17 @@ describe ULID do
         (ulid_2 < ulid_1).should be_true
       end
     end
+
+    it "validator should return true if a string is a valid ulid" do
+      validator = ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3")
+      validator.should eq true
+    end
+
+    it "should not valdate invalid strings" do
+      ULID.valid?("0").should eq false
+      ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ32").should eq false
+      # ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should eq false
+      ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ").should eq false
+    end
   end
 end
