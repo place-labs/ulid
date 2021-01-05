@@ -29,7 +29,8 @@ module ULID
   # # => true
   # ```
   def valid?(ulid : String)
-    ulid.size == TIME_LEN + RANDOM_LEN && valid_chars?(ulid)
+    # is ulid the correct size AND only contain valid characters?
+    ulid.size == TIME_LEN + RANDOM_LEN && (ulid =~ /[^0123456789ABCDEFGHJKMNPQRSTVWXYZ]/).nil?
   end
 
   def encoded_time(ulid : String)
@@ -56,9 +57,4 @@ module ULID
       end
     end.reverse
   end
-
-  private def valid_chars?(ulid : String) : Bool
-    ulid.chars.uniq.each { |char| return false unless ENCODING.includes?(char) }
-    true  
-  end 
 end

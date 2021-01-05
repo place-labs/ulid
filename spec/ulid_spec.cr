@@ -65,8 +65,14 @@ describe ULID do
     it "should not valdate invalid strings" do
       ULID.valid?("0").should eq false
       ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ32").should eq false
-      # ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should eq false
+      ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should eq false
       ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ").should eq false
+      ULID.valid?("!@#$%^&*(").should eq false
+      ULID.valid?("abcde").should eq false
+      ULID.valid?("1234567890").should eq false
+      ULID.valid?("01!3EAF48P97R8MP9WS8MHDTZ3").should eq false
     end
+
+    # test time decode method
   end
 end
