@@ -73,63 +73,17 @@ describe ULID do
       ULID.valid?("01!3EAF48P97R8MP9WS8MHDTZ3").should eq false
     end
 
-    # test time decode method
-    it "should correctly decode a ulid's seed time", focus: true do
-      # characters = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
-      # map = {'0' => 0}
-      # characters.chars.map { |char|
-      #   map[char] = characters.index(char) if characters.index(char)
-      # }
-      # pp map
-
-      # map = {'0' => 0,
-      #        '1' => 1,
-      #        '2' => 2,
-      #        '3' => 3,
-      #        '4' => 4,
-      #        '5' => 5,
-      #        '6' => 6,
-      #        '7' => 7,
-      #        '8' => 8,
-      #        '9' => 9,
-      #        'A' => 10,
-      #        'B' => 11,
-      #        'C' => 12,
-      #        'D' => 13,
-      #        'E' => 14,
-      #        'F' => 15,
-      #        'G' => 16,
-      #        'H' => 17,
-      #        'J' => 18,
-      #        'K' => 19,
-      #        'M' => 20,
-      #        'N' => 21,
-      #        'P' => 22,
-      #        'Q' => 23,
-      #        'R' => 24,
-      #        'S' => 25,
-      #        'T' => 26,
-      #        'V' => 27,
-      #        'W' => 28,
-      #        'X' => 29,
-      #        'Y' => 30,
-      #        'Z' => 31 }
-
-      # # hello = ULID.generate
-      # # seedtime = ULID.seed_time(hello)
-      # ms = ULID.from_base32("01B3EAF48P", map)
-      # puts ms
-      # puts ms.hexstring
-      # puts ms.hexstring.to_i64(16)
-      # ms2 = "01B3EAF48P".to_i64(32)
-      # pp! ms2
+    # test seed_time method
+    it "should correctly decode a ulid's seed time" do
+      # hello = ULID.generate
+      # seedtime = ULID.seed_time(hello)
 
       ms = ULID.seed_time("01EVDRF3VB5VD3211Z4DA112V9")
       puts ms
-      # seedtime = ULID.seed_time("01B3EAF48P97R8MP9WS6MHDTZ3")
-      # seedtime2 = ULID.seed_time("01EVDK4C0Q275A7AHHEVX02DCG")
-      # .should be_a Time
-      # ULID.seed_time("").should eq "your fave time"
+      seedtime = ULID.seed_time("01B3EAF48P97R8MP9WS6MHDTZ3")
+      puts seedtime
+      seedtime2 = ULID.seed_time("01EVDK4C0Q275A7AHHEVX02DCG")
+      puts seedtime2
     end
   end
 end
