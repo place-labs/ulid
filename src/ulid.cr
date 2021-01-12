@@ -26,8 +26,12 @@ module ULID
   # # => true
   # ```
   def valid?(ulid : String) : Bool
-    # is ulid the correct size AND only contain valid characters?
-    ulid.size == TIME_LEN + RANDOM_LEN && (ulid =~ /[^0123456789ABCDEFGHJKMNPQRSTVWXYZ]/).nil?
+    # Incorrect length
+    return false unless ulid.size == TIME_LEN + RANDOM_LEN
+    # Invalid chars
+    return false unless ulid.chars.all? &.in?(ENCODING)
+    
+    return true
   end
 
   # TODO #valid!(ulid : String) => returns nil, raise appropriate errors in invalid
