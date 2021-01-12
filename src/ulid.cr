@@ -25,14 +25,14 @@ module ULID
   # ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3")
   # # => true
   # ```
-  def valid?(ulid : String)
+  def valid?(ulid : String) : Bool
     # is ulid the correct size AND only contain valid characters?
     ulid.size == TIME_LEN + RANDOM_LEN && (ulid =~ /[^0123456789ABCDEFGHJKMNPQRSTVWXYZ]/).nil?
   end
 
   # TODO #valid!(ulid : String) => returns nil, raise appropriate errors in invalid
 
-  def seed_time(ulid : String)
+  def seed_time(ulid : String) : Time
     Time.unix_ms(ulid[0..9].to_i64(32))
   end
 
