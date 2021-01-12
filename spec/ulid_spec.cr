@@ -75,15 +75,17 @@ describe ULID do
 
     # test seed_time method
     it "should correctly decode a ulid's seed time" do
-      # hello = ULID.generate
-      # seedtime = ULID.seed_time(hello)
-
-      ms = ULID.seed_time("01EVDRF3VB5VD3211Z4DA112V9")
-      puts ms
       seedtime = ULID.seed_time("01B3EAF48P97R8MP9WS6MHDTZ3")
-      puts seedtime
+      seedtime.should be_a Time
+      # seedtime.should eq (2016-12-08 04:18:39.001000000 UTC)
+
+      seedtime1 = ULID.seed_time("01EVDRF3VB5VD3211Z4DA112V9")
+      seedtime1.should be_a Time
+      # seedtime1.should eq 2021-02-26 00:22:56 UTC
+
       seedtime2 = ULID.seed_time("01EVDK4C0Q275A7AHHEVX02DCG")
-      puts seedtime2
+      seedtime2.should be_a Time
+      # seedtime2.should eq 2021-02-25 22:14:43 UTC
     end
   end
 end
