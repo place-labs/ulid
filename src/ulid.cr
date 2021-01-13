@@ -36,6 +36,12 @@ module ULID
 
   # TODO #valid!(ulid : String) => returns nil, raise appropriate errors in invalid
 
+  # Decode ULID seedtime
+  #
+  # ```
+  # ULID.seed_time("01EVDK4C0Q275A7AHHEVX02DCG")
+  # # => 2021-02-25 22:14:43.994000000 UTC
+  # ```
   def seed_time(ulid : String) : Time
     Time.unix_ms(ulid[0..9].to_i64(32))
   end
