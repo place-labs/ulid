@@ -59,20 +59,76 @@ describe ULID do
 
     describe ".valid? : Bool" do
       it "validate a valid string" do
-        validator = ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3")
-        validator.should eq true
+        ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3").should eq true
       end
 
       it "should not validate invalid strings" do
         ULID.valid?("0").should eq false
         ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ32").should eq false
-        ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should eq false
+        ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should eq true # ulids are not case sensitive
         ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ").should eq false
         ULID.valid?("!@#$%^&*(").should eq false
         ULID.valid?("abcde").should eq false
         ULID.valid?("1234567890").should eq false
         ULID.valid?("01!3EAF48P97R8MP9WS8MHDTZ3").should eq false
         ULID.valid?("").should eq false
+      end
+    end
+
+    describe ".valid!" do
+      it "return nil for a valid string" do
+        ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3").should eq nil
+        ULID.valid!("01b3EAF48P97R8MP9WS6MHDTZ3").should eq nil
+      end
+
+      it "raise appropriate errors for invalid strings" do
+        begin
+          ULID.valid!("0")
+        rescue e
+          e.message.should eq "ULID should be 26 characters"
+        end
+
+        begin
+          ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ32")
+        rescue e
+          e.message.should eq "ULID should be 26 characters"
+        end
+
+        begin
+          ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ")
+        rescue e
+          e.message.should eq "ULID should be 26 characters"
+        end
+
+        begin
+          ULID.valid!("!@#$%^&*(")
+        rescue e
+          e.message.should eq "ULID should be 26 characters"
+        end
+
+        begin
+          ULID.valid!("abcde")
+        rescue e
+          e.message.should eq "ULID should be 26 characters"
+        end
+
+        begin
+          ULID.valid!("1234567890")
+        rescue e
+          e.message.should eq "ULID should be 26 characters"
+        end
+
+        begin
+          ULID.valid!("01!3EAF48P97R8MP9WS8MHDTZ3")
+        rescue e
+          e.message.should eq "Invalid characters found in string. Should only contain 0123456789ABCDEFGHJKMNPQRSTVWXYZ"
+        end
+
+        begin
+          ULID.valid!("")
+        rescue e
+          e.message.should eq "ULID should be 26 characters"
+        end
       end
     end
 
@@ -91,5 +147,9 @@ describe ULID do
         seedtime2.should eq Time.utc(2021, 2, 25, 22, 14, 43, nanosecond: 994000000)
       end
     end
+
+    describe ".parse : { Time, String }" do
+      # test .parse
+    end  
   end
 end
