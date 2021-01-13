@@ -61,6 +61,16 @@ module ULID
     Time.unix_ms(ulid[0..9].to_i64(32))
   end
 
+  # Parse ULID
+  #
+  # ```
+  # ULID.parse("01EVDK4C0Q275A7AHHEVX02DCG")
+  # # => { Time, String }
+  # ```
+  def parse(ulid : String, &) : { Time, String }
+
+  end
+
   private def encode_time(now : Time, len : Int32) : String
     ms = now.to_unix_ms
 
