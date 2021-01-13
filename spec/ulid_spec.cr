@@ -147,9 +147,5 @@ describe ULID do
         seedtime2.should eq Time.utc(2021, 2, 25, 22, 14, 43, nanosecond: 994000000)
       end
     end
-
-    describe ".parse : { Time, String }" do
-      # test .parse
-    end  
   end
 end
