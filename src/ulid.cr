@@ -38,19 +38,6 @@ module ULID
     return true
   end
 
-  # Validate a string is a ULID, raises errors for invalid strings
-  #
-  # ```
-  # ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3")
-  # # => nil
-  # ```
-  def valid!(ulid : String) : Nil
-    raise IncorrectLength.new("ULID should be 26 characters") unless ulid.size == TIME_LEN + RANDOM_LEN
-    raise InvalidChars.new("Invalid characters found in string. Should only contain #{ENCODING}") unless ulid.upcase.chars.all? &.in?(ENCODING)
-
-    return nil
-  end
-
   # Decode ULID seedtime
   #
   # ```

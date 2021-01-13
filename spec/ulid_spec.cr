@@ -75,63 +75,6 @@ describe ULID do
       end
     end
 
-    describe ".valid!" do
-      it "return nil for a valid string" do
-        ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3").should eq nil
-        ULID.valid!("01b3EAF48P97R8MP9WS6MHDTZ3").should eq nil
-      end
-
-      it "raise appropriate errors for invalid strings" do
-        begin
-          ULID.valid!("0")
-        rescue e
-          e.message.should eq "ULID should be 26 characters"
-        end
-
-        begin
-          ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ32")
-        rescue e
-          e.message.should eq "ULID should be 26 characters"
-        end
-
-        begin
-          ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ")
-        rescue e
-          e.message.should eq "ULID should be 26 characters"
-        end
-
-        begin
-          ULID.valid!("!@#$%^&*(")
-        rescue e
-          e.message.should eq "ULID should be 26 characters"
-        end
-
-        begin
-          ULID.valid!("abcde")
-        rescue e
-          e.message.should eq "ULID should be 26 characters"
-        end
-
-        begin
-          ULID.valid!("1234567890")
-        rescue e
-          e.message.should eq "ULID should be 26 characters"
-        end
-
-        begin
-          ULID.valid!("01!3EAF48P97R8MP9WS8MHDTZ3")
-        rescue e
-          e.message.should eq "Invalid characters found in string. Should only contain 0123456789ABCDEFGHJKMNPQRSTVWXYZ"
-        end
-
-        begin
-          ULID.valid!("")
-        rescue e
-          e.message.should eq "ULID should be 26 characters"
-        end
-      end
-    end
-
     describe ".seedtime : Time" do
       it "should correctly decode seed time" do
         seedtime = ULID.seed_time("01B3EAF48P97R8MP9WS6MHDTZ3")
