@@ -59,7 +59,7 @@ describe ULID do
 
     describe ".valid? : Bool" do
       it "validate a valid string" do
-        ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3").should eq true
+        ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3").should be_true
       end
 
       it "should not validate invalid strings" do
