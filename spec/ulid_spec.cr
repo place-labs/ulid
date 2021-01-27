@@ -80,7 +80,8 @@ describe ULID do
         seedtime = ULID.seed_time("01B3EAF48P97R8MP9WS6MHDTZ3")
         seedtime.should be_a Time
         seedtime.should eq Time.utc(2016, 12, 8, 4, 18, 39, nanosecond: 1000000)
-
+        # Check out Time.unix_ms
+      
         seedtime1 = ULID.seed_time("01EVDRF3VB5VD3211Z4DA112V9")
         seedtime1.should be_a Time
         seedtime1.should eq Time.utc(2021, 2, 26, 0, 22, 56, nanosecond: 235000000)
