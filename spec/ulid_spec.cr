@@ -60,7 +60,10 @@ describe ULID do
     describe ".valid?" do
       it "should validate a valid string" do
         ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3").should be_true
-        ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should be_true # ulids are not case sensitive
+      end
+      
+      it "should case insensitive" do
+        ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should be_true
       end
       
       it "should detect incorrect length" do
