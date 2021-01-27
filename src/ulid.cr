@@ -19,10 +19,6 @@ module ULID
     encode_time(seed_time, TIME_LEN) + encode_random(RANDOM_LEN)
   end
 
-  class IncorrectLength < Exception; end
-
-  class InvalidChars < Exception; end
-
   # Validate a string is a ULID
   #
   # ```
@@ -38,14 +34,19 @@ module ULID
     return true
   end
 
-  # Decode ULID seedtime
+  # Validate a string is a ULID
   #
   # ```
-  # ULID.seed_time("01EVDK4C0Q275A7AHHEVX02DCG")
-  # # => 2021-02-25 22:14:43.994000000 UTC
+  # ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3")
+  # # => nil (or exception)
   # ```
-  def seed_time(ulid : String) : Time
-    Time.unix_ms(ulid[0..9].to_i64(32))
+  def valid!(ulid : String) : Nil
+    # Incorrect length
+    raise IncorrectLength.new("ULIDs must be 26 characters.") unless ulid.size == TIME_LEN + RANDOM_LEN
+    # Invalid chars
+    raise InvalidChars.new("Invalid characters found.") unless ulid.upcase.chars.all? &.in?(ENCODING)
+
+    return nil
   end
 
   private def encode_time(now : Time, len : Int32) : String

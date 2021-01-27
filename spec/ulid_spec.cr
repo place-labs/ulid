@@ -57,15 +57,15 @@ describe ULID do
       end
     end
 
-    describe ".valid? : Bool" do
-      it "validate a valid string" do
+    describe ".valid?" do
+      it "should validate a valid string" do
         ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3").should be_true
+        ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should be_true # ulids are not case sensitive
       end
 
       it "should not validate invalid strings" do
         ULID.valid?("0").should be_false
         ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ32").should be_false
-        ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should be_true # ulids are not case sensitive
         ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ").should be_false
         ULID.valid?("!@#$%^&*(").should be_false
         ULID.valid?("abcde").should be_false
@@ -75,19 +75,26 @@ describe ULID do
       end
     end
 
-    describe ".seedtime : Time" do
-      it "should correctly decode seed time" do
-        seedtime = ULID.seed_time("01B3EAF48P97R8MP9WS6MHDTZ3")
-        seedtime.should be_a Time
-        seedtime.should eq Time.utc(2016, 12, 8, 4, 18, 39, nanosecond: 1000000)
-
-        seedtime1 = ULID.seed_time("01EVDRF3VB5VD3211Z4DA112V9")
-        seedtime1.should be_a Time
-        seedtime1.should eq Time.utc(2021, 2, 26, 0, 22, 56, nanosecond: 235000000)
-
-        seedtime2 = ULID.seed_time("01EVDK4C0Q275A7AHHEVX02DCG")
-        seedtime2.should be_a Time
-        seedtime2.should eq Time.utc(2021, 2, 25, 22, 14, 43, nanosecond: 994000000)
+    describe ".valid!" do
+      it "should validate a valid string" do
+        ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3").should be_nil
+        ULID.valid!("01b3EAF48P97R8MP9WS6MHDTZ3").should be_nil # ulids are not case sensitive
+      end
+      
+      it "should detect incorrect length" do
+        expect_raises(IncorrectLength) { ULID.valid!("0") }
+        expect_raises(IncorrectLength) { ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ32") }
+        expect_raises(IncorrectLength) { ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ") }
+        expect_raises(IncorrectLength) { ULID.valid!("!@#$%^&*(") }
+        expect_raises(IncorrectLength) { ULID.valid!("abcde") }
+        expect_raises(IncorrectLength) { ULID.valid!("1234567890") }
+        expect_raises(IncorrectLength) { ULID.valid!("") }
+      end
+      
+      it "should dectect invalid characters" do
+        expect_raises(InvalidChars) { ULID.valid!("01!3EAF48P97R8MP9WS8MHDTZ3") }
+        expect_raises(InvalidChars) { ULID.valid!("01I3EAF48P97R8MP9WS8MHDTZ3") }
+        expect_raises(InvalidChars) { ULID.valid!("01O3EAF48P97R8MP9WS8MHDTZ3") }
       end
     end
   end
