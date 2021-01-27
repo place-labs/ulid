@@ -44,6 +44,7 @@ module ULID
   # ULID.seed_time("01EVDK4C0Q275A7AHHEVX02DCG")
   # # => 2021-02-25 22:14:43.994000000 UTC
   # ```
+  # This is incorrect. You'll need to invert the process used in #encode_time. Importantly, the alphabet used for encoding is Crockford 32 rather than vanilla base32.
   def seed_time(ulid : String) : Time
     Time.unix_ms(ulid[0..9].to_i64(32))
   end
