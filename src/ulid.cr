@@ -6,7 +6,7 @@ module ULID
 
   # Crockford's Base32
   private ENCODING     = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
-  private ENCODING_LEN = ENCODING.size
+  private ENCODING_LEN = ENCODING.size.to_i64
   private TIME_LEN     = 10
   private RANDOM_LEN   = 16
 
@@ -62,7 +62,7 @@ module ULID
       .with_index
       .sum(0_i64) do |char, i|
         ord = ENCODING.index(char) || raise InvalidChars.new("Character: #{char} not part of Crockford's Base32.")
-        ord.to_i64 * (ENCODING_LEN.to_i64 ** i)
+        ord.to_i64 * (ENCODING_LEN ** i)
       end
     Time.unix_ms(sum)
   end
