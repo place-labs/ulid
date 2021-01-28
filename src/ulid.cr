@@ -57,11 +57,12 @@ module ULID
   # # => 2021-01-28 00:58:08.810000000 UTC
   # ```
   def seed_time(ulid : String) : Time
-    sum = 0_i64
-    ulid[0..9].reverse
-      .each_char_with_index do |char, i|
+    sum = ulid[0..9].reverse
+      .each_char
+      .with_index
+      .sum(0_i64) do |char, i|
         ord = ENCODING.index(char) || raise InvalidChars.new("Character: #{char} not part of Crockford's Base32.")
-        sum += ord.to_i64 * (ENCODING_LEN.to_i64 ** i)
+        ord.to_i64 * (ENCODING_LEN.to_i64 ** i)
       end
     Time.unix_ms(sum)
   end
