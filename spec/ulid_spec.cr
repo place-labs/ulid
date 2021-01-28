@@ -58,21 +58,24 @@ describe ULID do
     end
   end
 
-  describe ".valid?" do
-    it "should validate a valid string" do
-      ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3").should be_true
-      ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should be_true # ulids are not case sensitive
-    end
-    
-    it "should detect incorrect length" do
-      ULID.valid?("0").should be_false
-      ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ32").should be_false
-      ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ").should be_false
-      ULID.valid?("!@#$%^&*(").should be_false
-      ULID.valid?("abcde").should be_false
-      ULID.valid?("1234567890").should be_false
-      ULID.valid?("").should be_false
-    end
+    describe ".valid?" do
+      it "should validate a valid string" do
+        ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3").should be_true
+      end
+      
+      it "should case insensitive" do
+        ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should be_true
+      end
+      
+      it "should detect incorrect length" do
+        ULID.valid?("0").should be_false
+        ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ32").should be_false
+        ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ").should be_false
+        ULID.valid?("!@#$%^&*(").should be_false
+        ULID.valid?("abcde").should be_false
+        ULID.valid?("1234567890").should be_false
+        ULID.valid?("").should be_false
+      end
 
     it "should dectect invalid characters" do
       ULID.valid?("01!3EAF48P97R8MP9WS8MHDTZ3").should be_false
