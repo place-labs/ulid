@@ -1,4 +1,5 @@
 require "./ulid/*"
+require "big"
 
 module ULID
   extend self
@@ -47,6 +48,23 @@ module ULID
     raise InvalidChars.new("Invalid characters found.") unless ulid.upcase.chars.all? &.in?(ENCODING)
 
     return nil
+  end
+
+  # Decode ULID seedtime
+  #
+  # ```
+  # ULID.seed_time("01EX37YR1AAECCK45H5BXSCCN2")
+  # # => 2021-01-28 00:58:08.810000000 UTC
+  # ```
+  def seed_time(ulid : String) : Time
+    sum = ulid[0..9].reverse
+      .each_char
+      .with_index
+      .sum(BigInt.new(0)) do |char, i|
+        place_value = ENCODING.index(char) || 0
+        BigInt.new(place_value.to_i64 * (32.to_big_i ** i))
+      end
+    Time.unix_ms(sum)
   end
 
   private def encode_time(now : Time, len : Int32) : String
