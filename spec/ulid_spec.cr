@@ -63,7 +63,7 @@ describe ULID do
       ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3").should be_true
     end
 
-    it "should case insensitive" do
+    it "should be case insensitive" do
       ULID.valid?("01b3EAF48P97R8MP9WS6MHDTZ3").should be_true
     end
 
@@ -77,7 +77,7 @@ describe ULID do
       ULID.valid?("").should be_false
     end
 
-    it "should dectect invalid characters" do
+    it "should detect invalid characters" do
       ULID.valid?("01!3EAF48P97R8MP9WS8MHDTZ3").should be_false
       ULID.valid?("01I3EAF48P97R8MP9WS8MHDTZ3").should be_false
       ULID.valid?("01O3EAF48P97R8MP9WS8MHDTZ3").should be_false
@@ -87,7 +87,10 @@ describe ULID do
   describe ".valid!" do
     it "should validate a valid string" do
       ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3").should be_nil
-      ULID.valid!("01b3EAF48P97R8MP9WS6MHDTZ3").should be_nil # ulids are not case sensitive
+    end
+
+    it "should be case insensitive" do
+      ULID.valid!("01b3EAF48P97R8MP9WS6MHDTZ3").should be_nil
     end
 
     it "should detect incorrect length" do
@@ -100,7 +103,7 @@ describe ULID do
       expect_raises(IncorrectLength) { ULID.valid!("") }
     end
 
-    it "should dectect invalid characters" do
+    it "should detect invalid characters" do
       expect_raises(InvalidChars) { ULID.valid!("01!3EAF48P97R8MP9WS8MHDTZ3") }
       expect_raises(InvalidChars) { ULID.valid!("01I3EAF48P97R8MP9WS8MHDTZ3") }
       expect_raises(InvalidChars) { ULID.valid!("01O3EAF48P97R8MP9WS8MHDTZ3") }
