@@ -27,12 +27,8 @@ module ULID
   # # => true
   # ```
   def valid?(ulid : String) : Bool
-    # Incorrect length
-    return false unless ulid.size == TIME_LEN + RANDOM_LEN
-    # Invalid chars
-    return false unless ulid.upcase.chars.all? &.in?(ENCODING)
-
-    return true
+    # Incorrect length && Invalid chars
+    ulid.size == TIME_LEN + RANDOM_LEN && ulid.upcase.chars.all? &.in(ENCODING)
   end
 
   # Validate a string is a ULID
