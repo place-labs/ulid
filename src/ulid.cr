@@ -43,7 +43,7 @@ module ULID
     # Invalid chars
     raise InvalidChars.new("Invalid characters found.") unless ulid.upcase.chars.all? &.in?(ENCODING)
 
-    return nil
+    nil
   end
 
   # Decode ULID seedtime
