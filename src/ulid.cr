@@ -1,5 +1,4 @@
 require "./ulid/*"
-require "big"
 
 module ULID
   extend self
