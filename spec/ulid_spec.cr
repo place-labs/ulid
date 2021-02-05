@@ -94,19 +94,19 @@ describe ULID do
     end
 
     it "should detect incorrect length" do
-      expect_raises(IncorrectLength) { ULID.validate!("0") }
-      expect_raises(IncorrectLength) { ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ32") }
-      expect_raises(IncorrectLength) { ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ") }
-      expect_raises(IncorrectLength) { ULID.validate!("!@#$%^&*(") }
-      expect_raises(IncorrectLength) { ULID.validate!("abcde") }
-      expect_raises(IncorrectLength) { ULID.validate!("1234567890") }
-      expect_raises(IncorrectLength) { ULID.validate!("") }
+      expect_raises(ULID::IncorrectLength) { ULID.validate!("0") }
+      expect_raises(ULID::IncorrectLength) { ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ32") }
+      expect_raises(ULID::IncorrectLength) { ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ") }
+      expect_raises(ULID::IncorrectLength) { ULID.validate!("!@#$%^&*(") }
+      expect_raises(ULID::IncorrectLength) { ULID.validate!("abcde") }
+      expect_raises(ULID::IncorrectLength) { ULID.validate!("1234567890") }
+      expect_raises(ULID::IncorrectLength) { ULID.validate!("") }
     end
 
     it "should detect invalid characters" do
-      expect_raises(InvalidChars) { ULID.validate!("01!3EAF48P97R8MP9WS8MHDTZ3") }
-      expect_raises(InvalidChars) { ULID.validate!("01I3EAF48P97R8MP9WS8MHDTZ3") }
-      expect_raises(InvalidChars) { ULID.validate!("01O3EAF48P97R8MP9WS8MHDTZ3") }
+      expect_raises(ULID::InvalidChars) { ULID.validate!("01!3EAF48P97R8MP9WS8MHDTZ3") }
+      expect_raises(ULID::InvalidChars) { ULID.validate!("01I3EAF48P97R8MP9WS8MHDTZ3") }
+      expect_raises(ULID::InvalidChars) { ULID.validate!("01O3EAF48P97R8MP9WS8MHDTZ3") }
     end
   end
 
