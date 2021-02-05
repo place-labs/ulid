@@ -124,5 +124,15 @@ describe ULID do
       seedtime2.should be_a Time
       seedtime2.should eq Time.unix_ms(1611795488810)
     end
+
+    it "should encode and decode a specific seed time" do 
+      time = Time.unix_ms(1481170718998)
+      ulid = ULID.generate(time)
+      ULID.seed_time(ulid).should eq time
+
+      time2 = Time.unix_ms(1610000863083)
+      ulid2 = ULID.generate(time2)
+      ULID.seed_time(ulid2).should eq time2
+    end
   end
 end
