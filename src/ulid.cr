@@ -36,7 +36,7 @@ module ULID
   # ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3")
   # # => nil (or exception)
   # ```
-  def valid!(ulid : String) : Nil
+  def validate!(ulid : String) : Nil
     # Incorrect length
     raise IncorrectLength.new("ULIDs must be 26 characters.") unless ulid.size == TIME_LEN + RANDOM_LEN
     # Invalid chars

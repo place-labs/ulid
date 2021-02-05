@@ -84,29 +84,29 @@ describe ULID do
     end
   end
 
-  describe ".valid!" do
+  describe ".validate!" do
     it "should validate a valid string" do
-      ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3").should be_nil
+      ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ3").should be_nil
     end
 
     it "should be case insensitive" do
-      ULID.valid!("01b3EAF48P97R8MP9WS6MHDTZ3").should be_nil
+      ULID.validate!("01b3EAF48P97R8MP9WS6MHDTZ3").should be_nil
     end
 
     it "should detect incorrect length" do
-      expect_raises(IncorrectLength) { ULID.valid!("0") }
-      expect_raises(IncorrectLength) { ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ32") }
-      expect_raises(IncorrectLength) { ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ") }
-      expect_raises(IncorrectLength) { ULID.valid!("!@#$%^&*(") }
-      expect_raises(IncorrectLength) { ULID.valid!("abcde") }
-      expect_raises(IncorrectLength) { ULID.valid!("1234567890") }
-      expect_raises(IncorrectLength) { ULID.valid!("") }
+      expect_raises(IncorrectLength) { ULID.validate!("0") }
+      expect_raises(IncorrectLength) { ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ32") }
+      expect_raises(IncorrectLength) { ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ") }
+      expect_raises(IncorrectLength) { ULID.validate!("!@#$%^&*(") }
+      expect_raises(IncorrectLength) { ULID.validate!("abcde") }
+      expect_raises(IncorrectLength) { ULID.validate!("1234567890") }
+      expect_raises(IncorrectLength) { ULID.validate!("") }
     end
 
     it "should detect invalid characters" do
-      expect_raises(InvalidChars) { ULID.valid!("01!3EAF48P97R8MP9WS8MHDTZ3") }
-      expect_raises(InvalidChars) { ULID.valid!("01I3EAF48P97R8MP9WS8MHDTZ3") }
-      expect_raises(InvalidChars) { ULID.valid!("01O3EAF48P97R8MP9WS8MHDTZ3") }
+      expect_raises(InvalidChars) { ULID.validate!("01!3EAF48P97R8MP9WS8MHDTZ3") }
+      expect_raises(InvalidChars) { ULID.validate!("01I3EAF48P97R8MP9WS8MHDTZ3") }
+      expect_raises(InvalidChars) { ULID.validate!("01O3EAF48P97R8MP9WS8MHDTZ3") }
     end
   end
 
