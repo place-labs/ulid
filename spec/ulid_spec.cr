@@ -68,19 +68,15 @@ describe ULID do
     end
 
     it "should detect incorrect length" do
-      ULID.valid?("0").should be_false
-      ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ32").should be_false
-      ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ").should be_false
-      ULID.valid?("!@#$%^&*(").should be_false
-      ULID.valid?("abcde").should be_false
-      ULID.valid?("1234567890").should be_false
-      ULID.valid?("").should be_false
+      ["0", "01B3EAF48P97R8MP9WS6MHDTZ32", "01B3EAF48P97R8MP9WS6MHDTZ32", "!@#$%^&*(", "abcde", "1234567890", ""].each { |i|
+        ULID.valid?(i).should be_false
+      }
     end
 
     it "should detect invalid characters" do
-      ULID.valid?("01!3EAF48P97R8MP9WS8MHDTZ3").should be_false
-      ULID.valid?("01I3EAF48P97R8MP9WS8MHDTZ3").should be_false
-      ULID.valid?("01O3EAF48P97R8MP9WS8MHDTZ3").should be_false
+      ["01!3EAF48P97R8MP9WS8MHDTZ3", "01I3EAF48P97R8MP9WS8MHDTZ3", "01O3EAF48P97R8MP9WS8MHDTZ3"].each { |i|
+        ULID.valid?(i).should be_false
+      }
     end
   end
 
@@ -94,19 +90,15 @@ describe ULID do
     end
 
     it "should detect incorrect length" do
-      expect_raises(ULID::IncorrectLength) { ULID.validate!("0") }
-      expect_raises(ULID::IncorrectLength) { ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ32") }
-      expect_raises(ULID::IncorrectLength) { ULID.validate!("01B3EAF48P97R8MP9WS6MHDTZ") }
-      expect_raises(ULID::IncorrectLength) { ULID.validate!("!@#$%^&*(") }
-      expect_raises(ULID::IncorrectLength) { ULID.validate!("abcde") }
-      expect_raises(ULID::IncorrectLength) { ULID.validate!("1234567890") }
-      expect_raises(ULID::IncorrectLength) { ULID.validate!("") }
+      ["0", "01B3EAF48P97R8MP9WS6MHDTZ32", "01B3EAF48P97R8MP9WS6MHDTZ32", "!@#$%^&*(", "abcde", "1234567890", ""]. each { |i|
+        expect_raises(ULID::IncorrectLength) { ULID.validate!(i) }
+      }
     end
 
     it "should detect invalid characters" do
-      expect_raises(ULID::InvalidChars) { ULID.validate!("01!3EAF48P97R8MP9WS8MHDTZ3") }
-      expect_raises(ULID::InvalidChars) { ULID.validate!("01I3EAF48P97R8MP9WS8MHDTZ3") }
-      expect_raises(ULID::InvalidChars) { ULID.validate!("01O3EAF48P97R8MP9WS8MHDTZ3") }
+      ["01!3EAF48P97R8MP9WS8MHDTZ3", "01I3EAF48P97R8MP9WS8MHDTZ3", "01O3EAF48P97R8MP9WS8MHDTZ3"].each { |i|
+        expect_raises(ULID::InvalidChars) { ULID.validate!(i) }
+      }
     end
   end
 
