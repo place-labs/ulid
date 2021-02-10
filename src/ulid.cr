@@ -41,8 +41,6 @@ module ULID
     raise IncorrectLength.new() unless ulid.size == TIME_LEN + RANDOM_LEN
     # Invalid chars
     raise InvalidChars.new() unless ulid.upcase.chars.all? &.in?(ENCODING)
-
-    nil
   end
 
   class IncorrectLength < Exception
