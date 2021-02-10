@@ -104,27 +104,16 @@ describe ULID do
 
   describe ".seed_time" do
     it "should correctly decode seed time" do
-      seedtime = ULID.seed_time("01B3EAF48P97R8MP9WS6MHDTZ3")
-      seedtime.should be_a Time
-      seedtime.should eq Time.unix_ms(1481170718998)
-
-      seedtime1 = ULID.seed_time("01EVDRF3VB5VD3211Z4DA112V9")
-      seedtime1.should be_a Time
-      seedtime1.should eq Time.unix_ms(1610000863083)
-
-      seedtime2 = ULID.seed_time("01EX37YR1AAECCK45H5BXSCCN2")
-      seedtime2.should be_a Time
-      seedtime2.should eq Time.unix_ms(1611795488810)
+      ULID.seed_time("01B3EAF48P97R8MP9WS6MHDTZ3").should eq Time.unix_ms(1481170718998)
+      ULID.seed_time("01EVDRF3VB5VD3211Z4DA112V9").should eq Time.unix_ms(1610000863083)
+      ULID.seed_time("01EX37YR1AAECCK45H5BXSCCN2").should eq Time.unix_ms(1611795488810)
     end
 
     it "should encode and decode a specific seed time" do 
-      time = Time.unix_ms(1481170718998)
-      ulid = ULID.generate(time)
-      ULID.seed_time(ulid).should eq time
-
-      time2 = Time.unix_ms(1610000863083)
-      ulid2 = ULID.generate(time2)
-      ULID.seed_time(ulid2).should eq time2
+      [Time.unix_ms(1481170718998), Time.unix_ms(1610000863083)].each { |time|
+        string = ULID.generate(time)
+        ULID.seed_time(string).should eq time
+      }
     end
   end
 end
