@@ -38,22 +38,12 @@ module ULID
   # ```
   def validate!(ulid : String) : Nil
     # Incorrect length
-    raise IncorrectLength.new() unless ulid.size == TIME_LEN + RANDOM_LEN
+    raise Invalid.new("ULIDs must be 26 characters.") unless ulid.size == TIME_LEN + RANDOM_LEN
     # Invalid chars
-    raise InvalidChars.new() unless ulid.upcase.chars.all? &.in?(ENCODING)
+    raise Invalid.new("Invalid characters found. ULID only contain: 0123456789ABCDEFGHJKMNPQRSTVWXYZ") unless ulid.upcase.chars.all? &.in?(ENCODING)
   end
 
-  class IncorrectLength < Exception
-    def initialize(message = "ULIDs must be 26 characters.")
-      super(message)
-    end
-  end
-
-  class InvalidChars < Exception
-    def initialize(message = "Invalid characters found.")
-      super(message)
-    end
-  end
+  class Invalid < Exception; end
 
   # Decode ULID seedtime
   #
