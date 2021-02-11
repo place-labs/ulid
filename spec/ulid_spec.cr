@@ -90,7 +90,7 @@ describe ULID do
     end
 
     it "should detect incorrect length" do
-      ["0", "01B3EAF48P97R8MP9WS6MHDTZ32", "01B3EAF48P97R8MP9WS6MHDTZ32", "!@#$%^&*(", "abcde", "1234567890", ""]. each { |i|
+      ["0", "01B3EAF48P97R8MP9WS6MHDTZ32", "01B3EAF48P97R8MP9WS6MHDTZ32", "!@#$%^&*(", "abcde", "1234567890", ""].each { |i|
         expect_raises(ULID::IncorrectLength) { ULID.validate!(i) }
       }
     end
@@ -109,7 +109,7 @@ describe ULID do
       ULID.seed_time("01EX37YR1AAECCK45H5BXSCCN2").should eq Time.unix_ms(1611795488810)
     end
 
-    it "should encode and decode a specific seed time" do 
+    it "should encode and decode a specific seed time" do
       [Time.unix_ms(1481170718998), Time.unix_ms(1610000863083)].each { |time|
         string = ULID.generate(time)
         ULID.seed_time(string).should eq time

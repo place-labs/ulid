@@ -52,7 +52,7 @@ module ULID
   # # => 2021-01-28 00:58:08.810000000 UTC
   # ```
   def seed_time(ulid : String) : Time
-    sum = ulid[0..TIME_LEN-1].reverse
+    sum = ulid[0..TIME_LEN - 1].reverse
       .each_char
       .with_index
       .sum(0_i64) do |char, i|
