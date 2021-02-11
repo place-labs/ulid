@@ -56,7 +56,7 @@ module ULID
       .each_char
       .with_index
       .sum(0_i64) do |char, i|
-        ord = ENCODING.index(char) || raise InvalidChars.new("Character: #{char} not part of Crockford's Base32.")
+        ord = ENCODING.index(char) || raise Invalid.new("Character: #{char} not part of Crockford's Base32.")
         ord.to_i64 * (ENCODING_LEN ** i)
       end
     Time.unix_ms(sum)

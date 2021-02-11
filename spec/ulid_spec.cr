@@ -91,13 +91,13 @@ describe ULID do
 
     it "should detect incorrect length" do
       ["0", "01B3EAF48P97R8MP9WS6MHDTZ32", "01B3EAF48P97R8MP9WS6MHDTZ32", "!@#$%^&*(", "abcde", "1234567890", ""].each { |i|
-        expect_raises(ULID::IncorrectLength) { ULID.validate!(i) }
+        expect_raises(ULID::Invalid) { ULID.validate!(i) }
       }
     end
 
     it "should detect invalid characters" do
       ["01!3EAF48P97R8MP9WS8MHDTZ3", "01I3EAF48P97R8MP9WS8MHDTZ3", "01O3EAF48P97R8MP9WS8MHDTZ3"].each { |i|
-        expect_raises(ULID::InvalidChars) { ULID.validate!(i) }
+        expect_raises(ULID::Invalid) { ULID.validate!(i) }
       }
     end
   end
