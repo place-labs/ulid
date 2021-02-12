@@ -5,7 +5,7 @@ module ULID
 
   # Crockford's Base32
   private ENCODING     = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
-  private ENCODING_LEN = ENCODING.size
+  private ENCODING_LEN = ENCODING.size.to_i64
   private TIME_LEN     = 10
   private RANDOM_LEN   = 16
 
@@ -17,6 +17,49 @@ module ULID
   # ```
   def generate(seed_time : Time = Time.utc) : String
     encode_time(seed_time, TIME_LEN) + encode_random(RANDOM_LEN)
+  end
+
+  # Validate a string is a ULID
+  #
+  # ```
+  # ULID.valid?("01B3EAF48P97R8MP9WS6MHDTZ3")
+  # # => true
+  # ```
+  def valid?(ulid : String) : Bool
+    # Incorrect length && Invalid chars
+    ulid.size == TIME_LEN + RANDOM_LEN && ulid.upcase.chars.all? &.in?(ENCODING)
+  end
+
+  # Validate a string is a ULID
+  #
+  # ```
+  # ULID.valid!("01B3EAF48P97R8MP9WS6MHDTZ3")
+  # # => nil (or exception)
+  # ```
+  def validate!(ulid : String) : Nil
+    # Incorrect length
+    raise Invalid.new("ULIDs must be 26 characters.") unless ulid.size == TIME_LEN + RANDOM_LEN
+    # Invalid chars
+    raise Invalid.new("Invalid characters found. ULID only contain: 0123456789ABCDEFGHJKMNPQRSTVWXYZ") unless ulid.upcase.chars.all? &.in?(ENCODING)
+  end
+
+  class Invalid < Exception; end
+
+  # Decode ULID seedtime
+  #
+  # ```
+  # ULID.seed_time("01EX37YR1AAECCK45H5BXSCCN2")
+  # # => 2021-01-28 00:58:08.810000000 UTC
+  # ```
+  def seed_time(ulid : String) : Time
+    sum = ulid[0..TIME_LEN - 1].reverse
+      .each_char
+      .with_index
+      .sum(0_i64) do |char, i|
+        ord = ENCODING.index(char) || raise Invalid.new("Character: #{char} not part of Crockford's Base32.")
+        ord.to_i64 * (ENCODING_LEN ** i)
+      end
+    Time.unix_ms(sum)
   end
 
   private def encode_time(now : Time, len : Int32) : String
