@@ -156,7 +156,7 @@ crystal spec
 ## Contributors
 
 - [SuperPaintman](https://github.com/SuperPaintman) SuperPaintman - creator, maintainer
-
+- [GabFitzgerald](https://github.com/GabFitzgerald)
 
 --------------------------------------------------------------------------------
 
